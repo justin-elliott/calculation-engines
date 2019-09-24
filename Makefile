@@ -1,7 +1,7 @@
 # Makefile
 
 CXX			:= gcc
-CXXFLAGS	:= -pedantic-errors -Wall -Wextra -Werror
+CXXFLAGS	:= -std=c++17 -pedantic-errors -Wall -Wextra -Werror
 INCLUDE		:= -Iinclude/
 LDFLAGS		:= -L/usr/lib -lstdc++ -lm
 BUILD		:= ./build
