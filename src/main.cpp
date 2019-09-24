@@ -3,9 +3,11 @@
 #include <cstdlib>
 #include <iostream>
 #include <iterator>
+#include <optional>
 #include <sstream>
 
 #include "accumulated_binary_computation.h"
+#include "apply_engine.h"
 #include "command_line.h"
 #include "engine_factory.h"
 
@@ -43,18 +45,24 @@ int main(int argc, char* argv[])
         return EXIT_FAILURE;
     }
     
+    std::optional<std::string> error;
+
     if (commandLine.inputType == InputType::Integers) {
-        std::stringstream args;
-        std::copy(argv + 2, argv + argc, std::ostream_iterator<std::string>(args, " "));
+        // Create a stream directly from the input arguments.
+        std::stringstream stream;
+        std::copy(argv + 2, argv + argc, std::ostream_iterator<std::string>(stream, " "));
 
-        std::for_each(
-            std::istream_iterator<Integer>(args),
-            std::istream_iterator<Integer>(),
-            std::ref(*engine));
-        std::cout << engine->value() << std::endl;
+        error = applyEngine(*engine, stream);
     } else {
-
+        error = applyEngine(*engine, commandLine.inputBegin, commandLine.inputEnd);
     }
+
+    if (error) {
+        std::cerr << *error << std::endl;
+        return EXIT_FAILURE;
+    }
+
+    std::cout << engine->value() << std::endl;
 
     return EXIT_SUCCESS;
 }
