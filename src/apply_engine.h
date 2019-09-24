@@ -11,9 +11,11 @@
 #include "engine.h"
 
 // Apply the engine to a single input stream.
+// On error, a string describing the problem is returned.
 std::optional<std::string> applyEngine(Engine& engine, std::istream& stream);
 
 // Apply the engine to a list of files, delimited by iterators.
-std::optional<std::string> applyEngine(Engine& engine, char** filesBegin, char** filesEnd);
+// On error, a string describing the problem is returned.
+std::optional<std::string> applyEngine(Engine& engine, const char** filesBegin, const char** filesEnd);
 
 #endif // APPLY_ENGINE_H

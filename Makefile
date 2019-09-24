@@ -11,7 +11,7 @@ TARGET			:= calc
 TEST_TARGET		:= calc_test
 
 SRC 			:= $(wildcard src/*.cpp)
-OBJ				:= $(SRC:%.cpp=$(OBJ_DIR)/src/%.o)
+OBJ				:= $(SRC:%.cpp=$(OBJ_DIR)/%.o)
 
 TEST_SRC 		:= $(wildcard src/*.cpp test/*.cpp)
 TEST_OBJ		:= $(TEST_SRC:%.cpp=$(OBJ_DIR)/%.o)
@@ -42,3 +42,4 @@ clean:
 	-@rm -vf $(TARGET_DIR)/$(TARGET)
 
 test: build $(TARGET_DIR)/$(TEST_TARGET)
+	$(TARGET_DIR)/$(TEST_TARGET)

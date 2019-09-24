@@ -13,8 +13,8 @@ struct CommandLine
     std::string program;
     std::string engineName;
     InputType inputType;
-    char** inputBegin;
-    char** inputEnd;
+    const char** inputBegin;
+    const char** inputEnd;
 };
 
 // Parse the command line arguments as passed to main().

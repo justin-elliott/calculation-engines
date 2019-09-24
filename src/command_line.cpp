@@ -12,8 +12,8 @@ CommandLine parseCommandLine(int argc, char* argv[]) {
         return { argv[0], std::string(), InputType::None, nullptr, nullptr };
     }
 
-    char** inputBegin = argv + 2;
-    char** inputEnd = argv + argc;
+    const char** inputBegin = const_cast<const char**>(argv + 2);
+    const char** inputEnd = const_cast<const char**>(argv + argc);
 
     // Determine if the input range is all numeric.
     std::regex digitRegEx("\\d+");
