@@ -8,12 +8,12 @@
 #include <string>
 #include <iosfwd>
 
-#include "computation.h"
+#include "engine.h"
 
 // Apply the engine to a single input stream.
-std::optional<std::string> applyEngine(Computation& engine, std::istream& stream);
+std::optional<std::string> applyEngine(Engine& engine, std::istream& stream);
 
 // Apply the engine to a list of files, delimited by iterators.
-std::optional<std::string> applyEngine(Computation& engine, char** filesBegin, char** filesEnd);
+std::optional<std::string> applyEngine(Engine& engine, char** filesBegin, char** filesEnd);
 
 #endif // APPLY_ENGINE_H

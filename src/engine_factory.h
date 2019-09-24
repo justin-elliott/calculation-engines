@@ -3,8 +3,8 @@
 //
 // Usage:
 //   EngineFactory engineFactory;
-//   engineFactory.registerEngine<MyComputation>("my_computation", InputType::Integers);
-//   auto myEngine = engineFactory.make("my_computation", InputType::Integers);
+//   engineFactory.registerEngine<MyEngine>("my_engine", InputType::Integers);
+//   auto myEngine = engineFactory.make("my_engine", InputType::Integers);
 
 #ifndef ENGINE_FACTORY_H
 #define ENGINE_FACTORY_H
@@ -15,25 +15,25 @@
 #include <tuple>
 #include <vector>
 
-#include "computation.h"
+#include "engine.h"
 #include "input_type.h"
 #include "non_copyable.h"
 
 class EngineFactory : private NonCopyable
 {
 private:
-    using ComputationFactory = std::function<std::unique_ptr<Computation> ()>;
-    using EngineDetails = std::tuple<InputType, ComputationFactory>;
+    using EngineConstructor = std::function<std::unique_ptr<Engine> ()>;
+    using EngineDetails = std::tuple<InputType, EngineConstructor>;
 
 public:
-    // Register a computation function with the given name and accepted input types.
+    // Register a engine function with the given name and accepted input types.
     // Names must be unique; non-unique entries are ignored.
-    template <typename Computation>
+    template <typename Engine>
     void registerEngine(const std::string& engineName, InputType acceptedTypes = InputType::Any);
 
-    // Create an engine computation. If no matching engine name or input type is found, nullptr
+    // Create an engine engine. If no matching engine name or input type is found, nullptr
     // is returned.
-    std::unique_ptr<Computation> make(const std::string& engineName, InputType inputType);
+    std::unique_ptr<Engine> make(const std::string& engineName, InputType inputType);
 
     // Retrieve the names of all of the registered engines.
     std::vector<std::string> registeredEngines() const;
@@ -44,13 +44,13 @@ private:
 
 // -------------------------------------------------------------------------------------------------
 
-template <typename Computation>
+template <typename Engine>
 inline void EngineFactory::registerEngine(const std::string& engineName, InputType acceptedTypes)
 {
-    ComputationFactory computationFactory = []() -> std::unique_ptr<Computation> {
-        return std::make_unique<Computation>();
+    EngineConstructor constructor = []() -> std::unique_ptr<Engine> {
+        return std::make_unique<Engine>();
     };
-    engines.insert({ engineName, std::make_tuple(acceptedTypes, computationFactory) });
+    engines.insert({ engineName, std::make_tuple(acceptedTypes, constructor) });
 }
 
 #endif // ENGINE_FACTORY_H

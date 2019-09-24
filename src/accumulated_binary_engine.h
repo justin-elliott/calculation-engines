@@ -1,20 +1,20 @@
-// accumulated_binary_computation.h
-// A templated class providing a concrete implementation of a Computation that maintains a simple
+// accumulated_binary_engine.h
+// A templated class providing a concrete implementation of a Engine that maintains a simple
 // accumulator value over binary operations.
 
-#ifndef ACCUMULATED_BINARY_COMPUTATION_H
-#define ACCUMULATED_BINARY_COMPUTATION_H
+#ifndef ACCUMULATED_BINARY_ENGINE_H
+#define ACCUMULATED_BINARY_ENGINE_H
 
 #include <numeric>
 #include <optional>
 
-#include "computation.h"
+#include "engine.h"
 
 template <typename BinaryOperation>
-class AccumulatedBinaryComputation : public Computation
+class AccumulatedBinaryEngine : public Engine
 {
 public:
-    AccumulatedBinaryComputation() = default;
+    AccumulatedBinaryEngine() = default;
 
     virtual void operator()(Integer value) override {
         if (accumulator.has_value()) {
@@ -34,9 +34,9 @@ private:
 };
 
 // -------------------------------------------------------------------------------------------------
-// Implementations based upon AccumulatedBinaryComputations
+// Implementations based upon AccumulatedBinaryEngines
 
-using MultiplierComputation = AccumulatedBinaryComputation<std::multiplies<Integer>>;
-using DividerComputation = AccumulatedBinaryComputation<std::divides<Integer>>;
+using MultiplierEngine = AccumulatedBinaryEngine<std::multiplies<Integer>>;
+using DividerEngine = AccumulatedBinaryEngine<std::divides<Integer>>;
 
-#endif // ACCUMULATED_BINARY_COMPUTATION_H
+#endif // ACCUMULATED_BINARY_ENGINE_H

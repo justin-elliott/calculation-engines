@@ -9,16 +9,16 @@
 
 #include "engine_factory.h"
 
-std::unique_ptr<Computation> EngineFactory::make(const std::string& engineName, InputType inputType) {
+std::unique_ptr<Engine> EngineFactory::make(const std::string& engineName, InputType inputType) {
     auto engineDetails = engines.find(engineName);
     if (engineDetails == engines.end()) {
         return nullptr;
     }
-    auto [acceptedTypes, computationFactory] = engineDetails->second;
+    auto [acceptedTypes, engineConstructor] = engineDetails->second;
     if ((inputType & acceptedTypes) == InputType::None) {
         return nullptr;
     }
-    return computationFactory();
+    return engineConstructor();
 }
 
 std::vector<std::string> EngineFactory::registeredEngines() const {

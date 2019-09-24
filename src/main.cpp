@@ -6,7 +6,7 @@
 #include <optional>
 #include <sstream>
 
-#include "accumulated_binary_computation.h"
+#include "accumulated_binary_engine.h"
 #include "apply_engine.h"
 #include "command_line.h"
 #include "engine_factory.h"
@@ -27,8 +27,8 @@ void usage(const CommandLine& commandLine, const EngineFactory& engineFactory)
 int main(int argc, char* argv[])
 {
     EngineFactory engineFactory;
-    engineFactory.registerEngine<MultiplierComputation>("multiplier", InputType::Files);
-    engineFactory.registerEngine<DividerComputation>("divider", InputType::Any);
+    engineFactory.registerEngine<MultiplierEngine>("multiplier", InputType::Files);
+    engineFactory.registerEngine<DividerEngine>("divider", InputType::Any);
 
     CommandLine commandLine = parseCommandLine(argc, argv);
     if (commandLine.inputType == InputType::None) {
