@@ -16,17 +16,8 @@
 #include <vector>
 
 #include "computation.h"
+#include "input_type.h"
 #include "non_copyable.h"
-
-// Allowable input types allowed on the command line: files, integers, or either.
-enum class InputType
-{
-    Files       = 0x01,
-    Integers    = 0x02,
-    Any         = Files | Integers
-};
-
-// -------------------------------------------------------------------------------------------------
 
 class EngineFactory : private NonCopyable
 {
@@ -36,8 +27,9 @@ private:
 
 public:
     // Register a computation function with the given name and accepted input types.
+    // Names must be unique; non-unique entries are ignored.
     template <typename Computation>
-    void registerEngine(const std::string& engineName, InputType inputType = InputType::Any);
+    void registerEngine(const std::string& engineName, InputType acceptedTypes = InputType::Any);
 
     // Create an engine computation. If no matching engine name or input type is found, nullptr
     // is returned.
@@ -53,12 +45,12 @@ private:
 // -------------------------------------------------------------------------------------------------
 
 template <typename Computation>
-inline void EngineFactory::registerEngine(const std::string& engineName, InputType inputType)
+inline void EngineFactory::registerEngine(const std::string& engineName, InputType acceptedTypes)
 {
     ComputationFactory computationFactory = []() -> std::unique_ptr<Computation> {
         return std::make_unique<Computation>();
     };
-    engines.insert({ engineName, std::make_tuple(inputType, computationFactory) });
+    engines.insert({ engineName, std::make_tuple(acceptedTypes, computationFactory) });
 }
 
 #endif // ENGINE_FACTORY_H

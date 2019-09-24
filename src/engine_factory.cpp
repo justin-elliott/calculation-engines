@@ -15,7 +15,7 @@ std::unique_ptr<Computation> EngineFactory::make(const std::string& engineName, 
         return nullptr;
     }
     auto [acceptedTypes, computationFactory] = engineDetails->second;
-    if ((static_cast<int>(inputType) & static_cast<int>(acceptedTypes)) == 0) {
+    if ((inputType & acceptedTypes) == InputType::None) {
         return nullptr;
     }
     return computationFactory();

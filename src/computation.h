@@ -1,5 +1,6 @@
 // computation.h
-// An abstract class representing a single step of an engine computation.
+// An abstract class representing a single step of an engine computation. A function-object style is
+// followed for interoperability with standard algorithms.
 //
 // Usage:
 //   TypeDerivedFromComputation computation;
@@ -13,7 +14,7 @@
 #define COMPUTATION_H
 
 #include "non_copyable.h"
-#include "types.h"
+#include "integer.h"
 
 class Computation : private NonCopyable
 {
