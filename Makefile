@@ -1,6 +1,6 @@
 # Makefile
 
-CXX				:= gcc
+CXX				:= g++
 CXXFLAGS		:= -std=c++17 -pedantic-errors -Wall -Wextra -Werror
 INCLUDE			:= -I. -Ithird_party/
 LDFLAGS			:= -L/usr/lib -lstdc++ -lm

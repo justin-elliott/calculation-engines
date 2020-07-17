@@ -1,9 +1,11 @@
 // apply_engine.cpp
 // Apply an engine to a stream of integer values.
 
-#include <fstream>
-
 #include "apply_engine.h"
+
+#include <algorithm>
+#include <iterator>
+#include <fstream>
 
 std::optional<std::string> applyEngine(Engine& engine, std::istream& stream) {
     std::for_each(
